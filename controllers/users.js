@@ -9,11 +9,16 @@ const getUsers = (req, res) => {
 const getUserById = (req, res) => {
   const { userId } = req.params;
   User.findById(userId)
+    .orFail()
     .then((user) => {
       res.send(user);
     })
     .catch((err) => {
       if (err.name === 'CastError') {
+        res.status(400).send({
+          message: 'Переданы некорректные данные при указании id пользователя',
+        });
+      } else if (err.name === 'DocumentNotFoundError') {
         res.status(404).send({
           message: 'Пользователь по указанному id не найден',
         });
