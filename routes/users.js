@@ -8,10 +8,10 @@ const {
   editAvatar,
 } = require('../controllers/users');
 
-router.get('/users', getUsers);
-router.get('/users/:userId', getUserById);
-router.post('/users', createUser);
-router.patch('/users/me', editProfile);
-router.patch('/users/me/avatar', editAvatar);
+router.get('/', getUsers);
+router.get('/:userId', getUserById);
+router.post('/', createUser);
+router.patch('/me', editProfile);
+router.patch('/me/avatar', editAvatar);
 
 module.exports = router;
