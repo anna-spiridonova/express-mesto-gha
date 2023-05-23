@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const { errors } = require('celebrate');
 const router = require('./routes');
+const errorHandler = require('./middlewares/errorHandler');
 
 const { PORT = 3000 } = process.env;
 
@@ -15,10 +16,6 @@ app.use(express.json());
 app.use(router);
 
 app.use(errors());
-app.use((err, req, res, next) => {
-  const { statusCode = 500, message } = err;
-  res.status(statusCode).send({ message: statusCode === 500 ? 'Ошибка сервера' : message });
-  next();
-});
+app.use(errorHandler);
 
 app.listen(PORT);
